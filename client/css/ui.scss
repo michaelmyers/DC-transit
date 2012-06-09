@@ -1,0 +1,237 @@
+/**
+* Atomizer-Software-UI
+* @license Copyright (C) 2012, Atomizer Software
+* http://atomizersoft.net
+*
+* @author Atomizer Software
+*/
+
+//Setup Up
+$panel-position: absolute;//fixed;
+//change to fixed to have them remain on the screen when scrolling
+
+//Colors
+$panel-color: #000;
+$tab-color: #000;
+$tab-color-active: #696969;
+$background-debug: blue;
+$text-color: #FFF;
+$opacity: 0.85;
+
+//Panel Size
+$panel-radius: 20px;
+
+//Spacing
+$tab-spacing: 120px;
+$tab-padding: 10px;
+
+#ui {
+  //widths
+  $outer-width: 500px;
+  $tab-width: 50px;
+  $panel-width: $outer-width - $tab-width;
+  //heights
+  $outer-height: 330px;
+  $tab-height: 50px;
+  $panel-height: $outer-height;
+  //radii
+  $tab-radius: 20px;
+  $panel-radius: 15px;
+
+  //panel-padding
+  $panel-padding-strong: 55px;
+  $panel-padding-weak: 10px;
+  $panel-padding-top: 5px;
+  $panel-padding-bottom: 5px;
+
+  color: $text-color;
+
+  //panel-container
+  .panel-container {
+    width: $outer-width;
+    height: $outer-height;
+    position: fixed;
+    z-index: 50;
+
+    filter: alpha(opacity = (0 * 100));
+    opacity: 0;
+
+    //-moz-transition:opacity 0.5s linear;
+    //-o-transition:opacity 0.5s linear;
+    //-webkit-transition:opacity 0.5s linear;
+    //-ms-transition:opacity 0.5s linear;
+    //transition:opacity 0.5s linear;
+
+    //display: none; //start out without displaying as default, will turn on with JS
+    //top: 50%; //this will determine where on the screen the tab&panel is
+  }
+  .panel-container.left {
+    right: 100%; //want this to be 100%
+    margin-right: -$tab-width;
+    -moz-transition:margin 0.3s linear;
+    -o-transition:margin 0.3s linear;
+    -webkit-transition:margin 0.3s linear;
+    -ms-transition:margin 0.3s linear;
+    transition:margin 0.3s linear;
+  }
+  .panel-container.right {
+    left: 100%; //want this to be 100%
+    margin-left: -$tab-width;
+    -moz-transition:margin 0.3s linear;
+    -o-transition:margin 0.3s linear;
+    -webkit-transition:margin 0.3s linear;
+    -ms-transition:margin 0.3s linear;
+    transition:margin 0.3s linear;
+  }
+  .panel-container.bottom {
+    top: 100%;
+    margin-top: -$tab-height;
+    -moz-transition:margin 0.3s linear;
+    -o-transition:margin 0.3s linear;
+    -webkit-transition:margin 0.3s linear;
+    -ms-transition:margin 0.3s linear;
+    transition:margin 0.3s linear;
+  }
+  .panel-container.top {
+    bottom: 100%;
+    margin-bottom: -$tab-height;
+    -moz-transition:margin 0.3s linear;
+    -o-transition:margin 0.3s linear;
+    -webkit-transition:margin 0.3s linear;
+    -ms-transition:margin 0.3s linear;
+    transition:margin 0.3s linear;
+  }
+  //tab
+  .tab {
+    text-decoration: none;
+    font-size: 16px;
+    letter-spacing: -1px;
+    font-weight: 700;
+    color: $text-color;
+    background: $tab-color;
+    padding: 5px 5px 5px 5px;
+    display: block;
+    //filter: alpha(opacity = ($opacity * 100));
+    //opacity: $opacity;
+  }
+  .tab.left {
+    position: absolute;
+    top: 0;
+    left: $panel-width;
+    padding-right: 15px;
+    -moz-border-radius-topright: $panel-radius;
+    -webkit-border-top-right-radius: $panel-radius;
+    border-top-right-radius: $panel-radius;
+    -moz-border-radius-bottomright: $panel-radius;
+    -webkit-border-bottom-right-radius: $panel-radius;
+    border-bottom-right-radius: $panel-radius;
+  }
+  .tab.right {
+    position: absolute;
+    top: 0;
+    right: $panel-width;
+    padding-left: 15px;
+    -moz-border-radius-topleft: $panel-radius;
+    -webkit-border-top-left-radius: $panel-radius;
+    border-top-left-radius: $panel-radius;
+    -moz-border-radius-bottomleft: $panel-radius;
+    -webkit-border-bottom-left-radius: $panel-radius;
+    border-bottom-left-radius: $panel-radius;
+  }
+  //test-panel
+  .panel {
+    background: $panel-color;
+    width: $panel-width - $panel-padding-strong - $panel-padding-weak;
+    height: $outer-height;
+    //filter: alpha(opacity = $opacity * 100);
+    //opacity: $opacity;
+    padding-top: $panel-padding-top;
+    padding-bottom: $panel-padding-bottom;
+  }
+  .panel.left{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding-left: $panel-padding-strong;
+    padding-right: $panel-padding-weak;
+    -moz-border-radius-bottomright: $panel-radius;
+    -webkit-border-bottom-right-radius: $panel-radius;
+    border-bottom-right-radius: $panel-radius;
+  }
+  .panel.right{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding-right: $panel-padding-strong;
+    padding-left: $panel-padding-weak;
+    -moz-border-radius-bottomleft: $panel-radius;
+    -webkit-border-bottom-left-radius: $panel-radius;
+    border-bottom-left-radius: $panel-radius;
+  }
+  //add to main div to open on click
+  .panel-container.left.open {
+    margin-right: -$panel-width;
+    -moz-transition:margin 0.3s linear;
+    -o-transition:margin 0.3s linear;
+    -webkit-transition:margin 0.3s linear;
+    -ms-transition:margin 0.3s linear;
+    transition:margin 0.3s linear;
+  }
+  //add to main div to open on hover
+  .panel-container.left.open-hover:hover {
+    margin-right: -$panel-width;
+    -moz-transition:margin 0.3s linear;
+    -o-transition:margin 0.3s linear;
+    -webkit-transition:margin 0.3s linear;
+    -ms-transition:margin 0.3s linear;
+    transition:margin 0.3s linear;
+  }
+  //add to main div to open on hover
+  .panel-container.right.open-hover:hover {
+    margin-left: -$panel-width;
+    -moz-transition:margin 0.3s linear;
+    -o-transition:margin 0.3s linear;
+    -webkit-transition:margin 0.3s linear;
+    -ms-transition:margin 0.3s linear;
+    transition:margin 0.3s linear;
+  }
+  //add to main div to open on click
+  .panel-container.right.open {
+    margin-left: -$panel-width;
+    -moz-transition:margin 0.3s linear;
+    -o-transition:margin 0.3s linear;
+    -webkit-transition:margin 0.3s linear;
+    -ms-transition:margin 0.3s linear;
+    transition:margin 0.3s linear;
+  }
+
+  .panel-container.hide {
+    display: none;
+  }
+
+  .panel-container.show {
+    display: inline;
+    filter: alpha(opacity = ($opacity * 100));
+    opacity: $opacity;
+
+    -moz-transition:opacity 0.5s linear;
+    -o-transition:opacity 0.5s linear;
+    -webkit-transition:opacity 0.5s linear;
+    -ms-transition:opacity 0.5s linear;
+    transition:opacity 0.5s linear;
+
+  }
+
+  #ui-options {
+    display: inline;
+
+    p {
+      color: orange;
+    }
+    input {
+      //float: left;
+    }
+  }
+
+
+}

@@ -1,0 +1,146 @@
+/**
+* Atomizer-Software-UI
+* @license Copyright (C) 2012, Atomizer Software
+* http://atomizersoft.net
+*
+* @author Atomizer Software
+*/
+#ui {
+  color: white; }
+  #ui .panel-container {
+    width: 500px;
+    height: 330px;
+    position: fixed;
+    z-index: 50;
+    filter: alpha(opacity=0);
+    opacity: 0; }
+  #ui .panel-container.left {
+    right: 100%;
+    margin-right: -50px;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear; }
+  #ui .panel-container.right {
+    left: 100%;
+    margin-left: -50px;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear; }
+  #ui .panel-container.bottom {
+    top: 100%;
+    margin-top: -50px;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear; }
+  #ui .panel-container.top {
+    bottom: 100%;
+    margin-bottom: -50px;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear; }
+  #ui .tab {
+    text-decoration: none;
+    font-size: 16px;
+    letter-spacing: -1px;
+    font-weight: 700;
+    color: white;
+    background: black;
+    padding: 5px 5px 5px 5px;
+    display: block; }
+  #ui .tab.left {
+    position: absolute;
+    top: 0;
+    left: 450px;
+    padding-right: 15px;
+    -moz-border-radius-topright: 15px;
+    -webkit-border-top-right-radius: 15px;
+    border-top-right-radius: 15px;
+    -moz-border-radius-bottomright: 15px;
+    -webkit-border-bottom-right-radius: 15px;
+    border-bottom-right-radius: 15px; }
+  #ui .tab.right {
+    position: absolute;
+    top: 0;
+    right: 450px;
+    padding-left: 15px;
+    -moz-border-radius-topleft: 15px;
+    -webkit-border-top-left-radius: 15px;
+    border-top-left-radius: 15px;
+    -moz-border-radius-bottomleft: 15px;
+    -webkit-border-bottom-left-radius: 15px;
+    border-bottom-left-radius: 15px; }
+  #ui .panel {
+    background: black;
+    width: 385px;
+    height: 330px;
+    padding-top: 5px;
+    padding-bottom: 5px; }
+  #ui .panel.left {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding-left: 55px;
+    padding-right: 10px;
+    -moz-border-radius-bottomright: 15px;
+    -webkit-border-bottom-right-radius: 15px;
+    border-bottom-right-radius: 15px; }
+  #ui .panel.right {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding-right: 55px;
+    padding-left: 10px;
+    -moz-border-radius-bottomleft: 15px;
+    -webkit-border-bottom-left-radius: 15px;
+    border-bottom-left-radius: 15px; }
+  #ui .panel-container.left.open {
+    margin-right: -450px;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear; }
+  #ui .panel-container.left.open-hover:hover {
+    margin-right: -450px;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear; }
+  #ui .panel-container.right.open-hover:hover {
+    margin-left: -450px;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear; }
+  #ui .panel-container.right.open {
+    margin-left: -450px;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear; }
+  #ui .panel-container.hide {
+    display: none; }
+  #ui .panel-container.show {
+    display: inline;
+    filter: alpha(opacity=85);
+    opacity: 0.85;
+    -moz-transition: opacity 0.5s linear;
+    -o-transition: opacity 0.5s linear;
+    -webkit-transition: opacity 0.5s linear;
+    -ms-transition: opacity 0.5s linear;
+    transition: opacity 0.5s linear; }
+  #ui #ui-options {
+    display: inline; }
+    #ui #ui-options p {
+      color: orange; }

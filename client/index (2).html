@@ -1,0 +1,142 @@
+<!doctype html>
+<!--
+      _/_/    _/_/_/_/_/    _/_/    _/      _/  _/_/_/  _/_/_/_/_/  _/_/_/_/  _/_/_/
+   _/    _/      _/      _/    _/  _/_/  _/_/    _/          _/    _/        _/    _/
+  _/_/_/_/      _/      _/    _/  _/  _/  _/    _/        _/      _/_/_/    _/_/_/
+ _/    _/      _/      _/    _/  _/      _/    _/      _/        _/        _/    _/
+_/    _/      _/        _/_/    _/      _/  _/_/_/  _/_/_/_/_/  _/_/_/_/  _/    _/
+
+
+      _/_/_/    _/_/    _/_/_/_/  _/_/_/_/_/  _/          _/    _/_/    _/_/_/    _/_/_/_/
+   _/        _/    _/  _/            _/      _/          _/  _/    _/  _/    _/  _/
+    _/_/    _/    _/  _/_/_/        _/      _/    _/    _/  _/_/_/_/  _/_/_/    _/_/_/
+       _/  _/    _/  _/            _/        _/  _/  _/    _/    _/  _/    _/  _/
+_/_/_/      _/_/    _/            _/          _/  _/      _/    _/  _/    _/  _/_/_/_/
+-->
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+
+    <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+ More info: h5bp.com/i/378 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title> commuter</title>
+    <meta name="description" content="">
+
+    <!-- Mobile viewport optimized: h5bp.com/viewport -->
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/ui.css">
+    <link rel="stylesheet" href="css/dc-commuter.css">
+
+    <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+
+    <!-- All JavaScript at the bottom, except this Modernizr build.
+Modernizr enables HTML5 elements & feature detects for optimal performance.
+Create your own custom Modernizr build: www.modernizr.com/download/ -->
+    <script src="js/libs/modernizr-2.5.3.min.js"></script>
+</head>
+<body>
+<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
+chromium.org/developers/how-tos/chrome-frame-getting-started -->
+<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a
+    different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a>
+    to experience this site.</p><![endif]-->
+<header>
+    <img id="dc-commuter-logo" src="img/dc-commuter-50.png">
+</header>
+<div id="container">
+    <div role="main">
+        <div id="radar-container"></div>
+    </div>
+    <footer>
+        <div id="info-container">
+            <small><b>Built by: </b></small>
+            <img src="img/AtomizerSoftware-170x90.png"><br/>
+            <small><b>Radar Image by the </b><a href="http://www.nws.noaa.gov">National Weather Service</a></small>
+
+        </div>
+
+    </footer>
+</div>
+<!-- end container -->
+<div id="ui">
+    <div id="metro" class="panel right" style="top:15px">
+        <div class="panel-content">
+            <div style="background-color: white;">
+                <iframe width="465" height="418"
+                        src="http://www.wmata.com/rider_tools/pids/showpid.cfm?station_id=96"></iframe>
+            </div>
+        </div>
+    </div>
+    <div id="traffic" class="panel left" style="top:150px;width:450px;height:375px">
+        <div class="panel-content">
+            <div id="map_canvas" style="width:100%; height:100%"></div>
+        </div>
+    </div>
+    <div id="traffic2" class="panel left" style="top:445px;width:450px;height:375px">
+        <div class="panel-content">
+            <iframe src="map-test.html" width="100%" height="100%" style=""></iframe>
+        </div>
+    </div>
+    <div id="forecast" class="panel left">
+        <div class="panel-content">
+            <span style="display: block !important; width: 320px; text-align: center; font-family: sans-serif; font-size: 12px;"><a
+                    href="http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:20001.1.99999&bannertypeclick=wu_clean2day"
+                    title="Washington, District of Columbia Weather Forecast"><img
+                    src="http://weathersticker.wunderground.com/weathersticker/cgi-bin/banner/ban/wxBanner?bannertype=wu_clean2day_cond&airportcode=KDCA&ForcedCity=Washington&ForcedState=DC&zipcode=20001&language=EN"
+                    alt="Find more about Weather in Washington, DC" width="300"/></a><br></span>
+        </div>
+    </div>
+    <div style="clear:both;"></div>
+    <a class="right tab" href="#metro" style="top:15px">Metro</a>
+    <!--<a class="left tab" href="#traffic" style="top:150px">Traffic</a> -->
+    <a class="left tab" href="#traffic2" style="top:445px">Traffic</a>
+    <a class="left tab" href="#forecast">Forecast</a>
+</div>
+
+
+<!-- JavaScript at the bottom for fast page loading -->
+
+<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+
+<!-- Google Maps API -->
+<script type="text/javascript"
+        src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBDS9-7CQpwjSuvnusLz3VLJsI6OafNREI&sensor=false">
+</script>
+
+<!-- scripts concatenated and minified via build script -->
+<script src="js/plugins.js"></script>
+<script src="js/script.js"></script>
+<!-- end scripts -->
+
+<!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+mathiasbynens.be/notes/async-analytics-snippet -->
+<script>
+    var _gaq = [
+        ['_setAccount', 'UA-XXXXX-X'],
+        ['_trackPageview']
+    ];
+    (function (d, t) {
+        var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g, s)
+    }(document, 'script'));
+</script>
+</body>
+</html>

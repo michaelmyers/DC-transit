@@ -1,0 +1,102 @@
+/**
+ * DC-transit
+ * @license Copyright (C) 2012, Atomizer Software
+ * http://atomizersoft.net
+ *
+ * @author Atomizer Software
+ */
+
+
+@font-face {
+  font-family: 'MinotaurPhatte';
+  src: url('fonts/minotaur-webfont.eot');
+  src: url('fonts/minotaur-webfont.eot?#iefix') format('embedded-opentype'),
+  url('fonts/minotaur-webfont.woff') format('woff'),
+  url('fonts/minotaur-webfont.ttf') format('truetype'),
+  url('fonts/minotaur-webfont.svg#MinotaurPhatte') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'OrbitronRegular';
+  src: url('fonts/orbitron-medium-webfont.eot');
+  src: url('fonts/orbitron-medium-webfont.eot?#iefix') format('embedded-opentype'),
+  url('fonts/orbitron-medium-webfont.woff') format('woff'),
+  url('fonts/orbitron-medium-webfont.ttf') format('truetype'),
+  url('fonts/orbitron-medium-webfont.svg#OrbitronRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+
+body {
+  overflow: hidden;
+  background-color: #A0CFEC; //#87ceeb;
+}
+
+#dc-transit-logo {
+  position: absolute;
+  top:10px;
+  left: 10px;
+
+  div {
+    display: inline-block;
+    float: left;
+    line-height: normal;
+  }
+
+  .d {
+    color: red;
+    font-family: 'MinotaurPhatte';
+    font-size: 5em;
+  }
+  .c {
+    color: blue;
+    font-family: 'MinotaurPhatte';
+    font-size: 5em;
+  }
+  .transit {
+    color: black;
+    font-family: 'OrbitronRegular';
+    font-size: 3em;
+    font-style:italic;
+  }
+}
+
+
+
+
+#info-container {
+  position: absolute;
+  width: auto;
+  //height: auto;
+  float:right;
+  bottom: 0;
+  right: 0;
+}
+
+#container {
+  clear: both;
+  margin: 0;
+  padding: 0;
+}
+
+#map_canvas {
+  opacity: 0;
+}
+
+#radar-container {
+  display: block;
+  width: auto;
+  height: 980px;
+  background-image: url(http://radar.weather.gov/Conus/Loop/NatLoop.gif);
+  background-position: -2200px -350px;
+  background-repeat: no-repeat;
+}
+
+iframe #radar {
+  border: none;
+}
