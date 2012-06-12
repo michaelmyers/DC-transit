@@ -34,8 +34,10 @@ _/_/_/      _/_/    _/            _/          _/  _/      _/    _/  _/    _/  _/
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/ui.css">
+
     <link rel="stylesheet" href="css/dc-transit.css">
+
+    <link rel="stylesheet" href="css/ui.css">
 
     <script src="js/vendor/modernizr-2.5.3.min.js"></script>
 </head>
@@ -50,6 +52,36 @@ _/_/_/      _/_/    _/            _/          _/  _/      _/    _/  _/    _/  _/
 </header>
 
 
+<footer>
+
+</footer>
+
+<div id="ui">
+    <div id="location" class="panel-container left" style="top: 25%;">
+        <a class="tab left open-hover">Location</a>
+        <div class="panel left">
+            <p>Current Location (lat, lon):<br/>
+                <span id="currentLat">???</span>&deg;, <span id="currentLon">???</span>&deg;
+            </p>
+        </div>
+    </div>
+    <div id="test" class="panel-container right" style="top:50%;">
+        <a class="tab right open-click">test</a>
+        <div class="panel left">
+            <p>poop ppooppo</p>
+        </div>
+    </div>
+    <div id="ui-options" class="panel-container left open-hover" style="top: 85%;">
+        <a class="tab left"><img src="img/gear_white.png"></a>
+
+        <div class="panel left">
+            <form id="options-form">
+            </form>
+        </div>
+    </div>
+</div>
+
+
     <!-- JavaScript at the bottom for fast page loading: http://developer.yahoo.com/performance/rules.html#js_bottom -->
 
     <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
@@ -59,7 +91,22 @@ _/_/_/      _/_/    _/            _/          _/  _/      _/    _/  _/    _/  _/
     <!-- scripts concatenated and minified via build script -->
     <script src="js/plugins.js"></script>
     <script src="js/ui.js"></script>
-    <script src="js/main.js"></script>
+
+    <script src="js/panel.js"></script>
+    <script src="js/dc-transit.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            'use strict';
+
+            ui.init({'panelStatePersistence':true, 'panelDisable':true});
+
+            transit.init();
+
+        });
+
+    </script>
+
     <!-- end scripts -->
 
     <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
