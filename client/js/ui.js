@@ -270,7 +270,7 @@ var ui = {
     },
     unpackLocalStorage : function (uiData) {
         'use strict';
-        console.log('uiData: ' + uiData);
+        //console.log('uiData: ' + uiData);
         ui.valueStore = JSON.parse(uiData);
         ui.unpackValueStorage();
     },

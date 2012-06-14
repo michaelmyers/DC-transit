@@ -59,6 +59,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
         <div class="d">D</div>
         <div class="c">C</div>
         <div class="transit">-transit</div>
+        <div class="beta">beta</div>
     </div>
 </header>
 
@@ -70,20 +71,14 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 <div id="ui">
     <div id="metro-arrivals" class="panel-container left " style="top: 25%;">
         <a class="tab left open-click">Metro</a>
-
         <div class="panel left">
+            <div id="metro-station"></div>
             <table id="metro-arrival-board">
                 <tr id="metro-arrival-board-header" class="head">
-                    <th>LN</th>
-                    <th>CAR</th>
-                    <th>DEST</th>
-                    <th>MIN</th>
-                </tr>
-                <tr class="train">
-                    <td>YL</td>
-                    <td>6</td>
-                    <td>Mt Vern</td>
-                    <td>2</td>
+                    <th> LN </th>
+                    <th> CAR </th>
+                    <th> DEST  </th>
+                    <th class="brd"> MIN</th>
                 </tr>
             </table>
         </div>
@@ -104,6 +99,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
         <a class="tab left"><img src="img/gear_white.png"></a>
 
         <div class="panel left">
+            <h3>Enable/Disable</h3>
             <form id="options-form">
             </form>
             <p>Current Location (lat, lon):<br/>

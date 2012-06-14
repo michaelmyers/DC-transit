@@ -31,6 +31,29 @@
 
 }
 
+@font-face {
+  font-family: 'TimesSquareRegular';
+  src: url('fonts/times_sq-webfont.eot');
+  src: url('fonts/times_sq-webfont.eot?#iefix') format('embedded-opentype'),
+  url('fonts/times_sq-webfont.woff') format('woff'),
+  url('fonts/times_sq-webfont.ttf') format('truetype'),
+  url('fonts/times_sq-webfont.svg#TimesSquareRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+
+@-webkit-keyframes blink {
+0%     { opacity: 0 } 50% { opacity: 0 }
+50.01% { opacity: 1 } 100% { opacity: 1 }
+}
+
+blink {
+  -webkit-animation: blink 0.7s infinite linear alternate;
+  -webkit-font-smoothing: antialiased;
+}
+
 
 body {
   overflow: hidden;
@@ -64,6 +87,12 @@ body {
     font-size: 3em;
     font-style:italic;
   }
+  .beta {
+    color: #ff4500;
+    font-family: 'TimesSquareRegular';
+    font-size: 2em;
+    padding-left: 10px;
+  }
 }
 
 #radar-container {
@@ -76,13 +105,32 @@ body {
   background-repeat: no-repeat;
 }
 
-#metro-arrivals {
+#metro-arrival-board {
+  font-family: 'TimesSquareRegular';
+  font-size: 2em;
+  line-height: normal;
+
+  text-align: left;
+
+  th {
+    padding-left: 15px;
+  }
+
+  td {
+    padding-left: 15px;
+
+  }
+
   .head {
     color:red;
   }
 
   .train {
-    color: yellow;
+    color: orange;
+  }
+
+  .right {
+    text-align: right;
   }
 }
 

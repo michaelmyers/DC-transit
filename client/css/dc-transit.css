@@ -19,6 +19,30 @@
   font-weight: normal;
   font-style: normal; }
 
+@font-face {
+  font-family: 'TimesSquareRegular';
+  src: url("fonts/times_sq-webfont.eot");
+  src: url("fonts/times_sq-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/times_sq-webfont.woff") format("woff"), url("fonts/times_sq-webfont.ttf") format("truetype"), url("fonts/times_sq-webfont.svg#TimesSquareRegular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@-webkit-keyframes blink {
+  0% {
+    opacity: 0; }
+
+  50% {
+    opacity: 0; }
+
+  50.01% {
+    opacity: 1; }
+
+  100% {
+    opacity: 1; } }
+
+blink {
+  -webkit-animation: blink 0.7s infinite linear alternate;
+  -webkit-font-smoothing: antialiased; }
+
 body {
   overflow: hidden;
   background-color: #bee8ff; }
@@ -44,6 +68,11 @@ body {
     font-family: 'OrbitronRegular';
     font-size: 3em;
     font-style: italic; }
+  #dc-transit-logo .beta {
+    color: #ff4500;
+    font-family: 'TimesSquareRegular';
+    font-size: 2em;
+    padding-left: 10px; }
 
 #radar-container {
   display: block;
@@ -53,10 +82,21 @@ body {
   background-position: -2200px -350px;
   background-repeat: no-repeat; }
 
-#metro-arrivals .head {
-  color: red; }
-#metro-arrivals .train {
-  color: yellow; }
+#metro-arrival-board {
+  font-family: 'TimesSquareRegular';
+  font-size: 2em;
+  line-height: normal;
+  text-align: left; }
+  #metro-arrival-board th {
+    padding-left: 15px; }
+  #metro-arrival-board td {
+    padding-left: 15px; }
+  #metro-arrival-board .head {
+    color: red; }
+  #metro-arrival-board .train {
+    color: orange; }
+  #metro-arrival-board .right {
+    text-align: right; }
 
 #info-container {
   position: absolute;
