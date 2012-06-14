@@ -28,7 +28,12 @@ var transit = {
     cbsEnabled:null, //capital bike share assistance
     trafficEnabled:null,
 
+    //location
     curPosition:new GeoPosition(0, 0),
+
+    //metro
+    closestStation:null,
+
 
     browserCapabilities:{
         geoLocation:null,
@@ -163,11 +168,14 @@ var transit = {
                 transit.curPosition.longitude + '&radius=' +
                 radius + '&api_key=' +
                 transit.METRO_API_KEY + '&callback=?', function (data) {
-                    var results;
-                    transit.out(transit.LOG, JSON.stringify(data));
-                    //results = JSON.parse(data);
-                    //transit.out(transit.LOG, results);
-
+                transit.out(transit.LOG, JSON.stringify(data));
+                for (var key in data.Entrances) {
+                    if (data.Entrances.hasOwnProperty(key)) {
+                        var entrance = data.Entrances[key];
+                        console.log(entrance.StationCode1);
+                    }
+                    transit.closestStation = data.Entrances[0];
+                }
             });
 
         } else {
@@ -178,9 +186,16 @@ var transit = {
     },
 
 
-    getStationArrivals: function () {
+    getStationArrivals:function (id) {
         //http://api.wmata.com/StationPrediction.svc/json/GetPrediction/A10,A11?api_key=YOUR_API_KEY
         //http://api.wmata.com/StationPrediction.svc/json/GetPrediction/K01?api_key=33nw729n2kh4w3q2txxspceg
+
+        $.getJSON('http://api.wmata.com/StationPrediction.svc/json/GetPrediction/' + id
+            + '?api_key=' + transit.METRO_API_KEY + '&callback=?', function (data) {
+            transit.out(transit.LOG, JSON.stringify(data));
+        })
+
+
     }
 
 

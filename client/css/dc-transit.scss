@@ -76,6 +76,17 @@ body {
   background-repeat: no-repeat;
 }
 
+#metro-arrivals {
+  .head {
+    color:red;
+  }
+
+  .train {
+    color: yellow;
+  }
+}
+
+
 #info-container {
   position: absolute;
   width: auto;
@@ -95,15 +106,8 @@ body {
   opacity: 0;
 }
 
-#radar-container {
-  display: block;
-  width: auto;
-  height: 980px;
-  background-image: url(http://radar.weather.gov/Conus/Loop/NatLoop.gif);
-  background-position: -2200px -350px;
-  background-repeat: no-repeat;
-}
-
 iframe #radar {
   border: none;
 }
+
+
