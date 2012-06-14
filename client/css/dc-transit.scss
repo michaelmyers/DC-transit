@@ -34,7 +34,7 @@
 
 body {
   overflow: hidden;
-  background-color: #A0CFEC; //#87ceeb;
+  background-color: #bee8ff;//#A0CFEC; //#87ceeb;
 }
 
 #dc-transit-logo {
@@ -66,8 +66,15 @@ body {
   }
 }
 
-
-
+#radar-container {
+  display: block;
+  width: auto;
+  height: 980px;
+  background-image: url(http://radar.weather.gov/Conus/Loop/NatLoop.gif);
+  //for mobile, non-looping http://radar.weather.gov/Conus/RadarImg/latest.gif
+  background-position: -2200px -350px;    //change these based on screen sizes.
+  background-repeat: no-repeat;
+}
 
 #info-container {
   position: absolute;

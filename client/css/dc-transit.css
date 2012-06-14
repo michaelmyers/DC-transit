@@ -21,7 +21,7 @@
 
 body {
   overflow: hidden;
-  background-color: #A0CFEC; }
+  background-color: #bee8ff; }
 
 #dc-transit-logo {
   position: absolute;
@@ -44,6 +44,14 @@ body {
     font-family: 'OrbitronRegular';
     font-size: 3em;
     font-style: italic; }
+
+#radar-container {
+  display: block;
+  width: auto;
+  height: 980px;
+  background-image: url(http://radar.weather.gov/Conus/Loop/NatLoop.gif);
+  background-position: -2200px -350px;
+  background-repeat: no-repeat; }
 
 #info-container {
   position: absolute;

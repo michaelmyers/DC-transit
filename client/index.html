@@ -15,10 +15,14 @@ _/_/_/      _/_/    _/            _/          _/  _/      _/    _/  _/    _/  _/
 -->
 
 <!-- Consider specifying the language of your content by adding the `lang` attribute to <html> -->
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
 
@@ -42,12 +46,19 @@ _/_/_/      _/_/    _/            _/          _/  _/      _/    _/  _/    _/  _/
     <script src="js/vendor/modernizr-2.5.3.min.js"></script>
 </head>
 <body>
-    <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
-         chromium.org/developers/how-tos/chrome-frame-getting-started -->
-    <!--[if lt IE 7]><p class="chromeframe">Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
+chromium.org/developers/how-tos/chrome-frame-getting-started -->
+<!--[if lt IE 7]><p class="chromeframe">Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a
+    different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a>
+    to experience this site.</p><![endif]-->
+
+<div id="radar-container"></div>
+
 <header>
     <div id="dc-transit-logo">
-        <div class="d">D</div><div class="c">C</div><div class="transit">-transit</div>
+        <div class="d">D</div>
+        <div class="c">C</div>
+        <div class="transit">-transit</div>
     </div>
 </header>
 
@@ -57,65 +68,78 @@ _/_/_/      _/_/    _/            _/          _/  _/      _/    _/  _/    _/  _/
 </footer>
 
 <div id="ui">
-    <div id="location" class="panel-container left" style="top: 25%;">
-        <a class="tab left open-hover">Location</a>
+    <div id="metro-station" class="panel-container left " style="top: 25%;">
+        <a class="tab left open-click">Metro</a>
+
         <div class="panel left">
-            <p>Current Location (lat, lon):<br/>
-                <span id="currentLat">???</span>&deg;, <span id="currentLon">???</span>&deg;
-            </p>
+        poop
         </div>
     </div>
-    <div id="test" class="panel-container right" style="top:50%;">
-        <a class="tab right open-click">test</a>
-        <div class="panel left">
-            <p>poop ppooppo</p>
+
+    <div id="hover" class="panel-container right open-hover" style="top: 60%;">
+        <a class="tab right">Hover!</a>
+
+        <div class="panel right">
+            <p>I am a panel that opens and closes when my tab is hovered on. I use absolutely zero JavaScript to open, I
+                am pure CSS3. As with the 'Click!' panel, I can be enabled or disabled in the options panel. The ability
+                for the user to enable or disable certain panels can be configured by passing 'panelDisable' as either
+                true or false when you initialize. </p>
         </div>
     </div>
+
     <div id="ui-options" class="panel-container left open-hover" style="top: 85%;">
         <a class="tab left"><img src="img/gear_white.png"></a>
 
         <div class="panel left">
             <form id="options-form">
             </form>
+            <p>Current Location (lat, lon):<br/>
+                <span id="currentLat">???</span>&deg;, <span id="currentLon">???</span>&deg;
+            </p>
         </div>
     </div>
 </div>
 
 
-    <!-- JavaScript at the bottom for fast page loading: http://developer.yahoo.com/performance/rules.html#js_bottom -->
+<!-- JavaScript at the bottom for fast page loading: http://developer.yahoo.com/performance/rules.html#js_bottom -->
 
-    <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.7.2.min.js"><\/script>')</script>
+<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.7.2.min.js"><\/script>')</script>
 
-    <!-- scripts concatenated and minified via build script -->
-    <script src="js/plugins.js"></script>
-    <script src="js/ui.js"></script>
+<!-- scripts concatenated and minified via build script -->
+<script src="js/plugins.js"></script>
+<script src="js/ui.js"></script>
 
-    <script src="js/panel.js"></script>
-    <script src="js/dc-transit.js"></script>
+<script src="js/panel.js"></script>
+<script src="js/dc-transit.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            'use strict';
+<script>
+    $(document).ready(function () {
+        'use strict';
 
-            ui.init({'panelStatePersistence':true, 'panelDisable':true});
+        ui.init({'panelStatePersistence':true, 'panelDisable':true});
 
-            transit.init();
+        transit.init();
 
-        });
+    });
 
-    </script>
+</script>
 
-    <!-- end scripts -->
+<!-- end scripts -->
 
-    <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
-         mathiasbynens.be/notes/async-analytics-snippet -->
-    <script>
-        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-        s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>
+<!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+mathiasbynens.be/notes/async-analytics-snippet -->
+<script>
+    var _gaq = [
+        ['_setAccount', 'UA-XXXXX-X'],
+        ['_trackPageview']
+    ];
+    (function (d, t) {
+        var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g, s)
+    }(document, 'script'));
+</script>
 </body>
 </html>
