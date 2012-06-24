@@ -1,0 +1,17 @@
+ALPHA:
+
+* Loading screen for metro times, weather, and bikeshare, maybe blinking?? I think so.
+* Decent mobile
+* Weather, next 8 hours
+* Bikeshare
+* Info box, link back to Atomizer, feedback link, contact for advertising
+* Change search on metro stations, increase proximity if none returned
+
+BETA:
+
+* Bookmark link, instructions
+* Facebook Like Link
+* Metro Alerts
+* Local storage to detect back metro data, then redirect to metro site
+* Not in DC
+* Changing distances for metro search
