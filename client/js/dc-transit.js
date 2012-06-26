@@ -92,6 +92,9 @@ var transit = {
     closestStationArrivals: [],
 
 
+
+
+
     browserCapabilities:{
         geoLocation:null,
         localStorage:null
@@ -340,8 +343,27 @@ var transit = {
                 );
             }
         }
-    }
+    },
 
+    /**
+     * WEATHER CALLS
+     *
+     * HOURLY on DC
+     * http://graphical.weather.gov/xml/sample_products/browser_interface/ndfdXMLclient.php?whichClient=NDFDgen&lat=38.889764&lon=-77.009486&listLatLon=&lat1=&lon1=&lat2=&lon2=&resolutionSub=&listLat1=&listLon1=&listLat2=&listLon2=&resolutionList=&endPoint1Lat=&endPoint1Lon=&endPoint2Lat=&endPoint2Lon=&listEndPoint1Lat=&listEndPoint1Lon=&listEndPoint2Lat=&listEndPoint2Lon=&zipCodeList=&listZipCodeList=&centerPointLat=&centerPointLon=&distanceLat=&distanceLon=&resolutionSquare=&listCenterPointLat=&listCenterPointLon=&listDistanceLat=&listDistanceLon=&listResolutionSquare=&citiesLevel=&listCitiesLevel=&sector=&gmlListLatLon=&featureType=&requestedTime=&startTime=&endTime=&compType=&propertyName=&product=time-series&begin=2004-01-01T00%3A00%3A00&end=2016-06-25T00%3A00%3A00&Unit=e&maxt=maxt&mint=mint&temp=temp&wx=wx&Submit=Submit
+     *
+     */
+
+
+     getWeatherHourly: function () {
+        'use strict';
+
+        $.get('http://graphical.weather.gov/xml/sample_products/browser_interface/ndfdXMLclient.php?' +
+            'whichClient=NDFDgen&lat=38.889764&lon=-77.009486&product=time-series&begin=2004-01-01T00%3A00%3A00' +
+            '&end=2016-06-25T00%3A00%3A00&Unit=e&maxt=maxt&mint=mint&temp=temp&wx=wx', function (data) {
+            transit.out(data);
+
+        })
+    }
 
 
 };
