@@ -7,7 +7,8 @@
 */
 
 //Setup Up
-$panel-position: absolute;//fixed;
+$panel-position: absolute;
+//fixed;
 //change to fixed to have them remain on the screen when scrolling
 
 //Colors
@@ -49,7 +50,6 @@ $tab-padding: 10px;
   //panel-container
   .panel-container {
     width: $outer-width;
-    height: $outer-height;
     position: fixed;
     z-index: 50;
 
@@ -66,40 +66,42 @@ $tab-padding: 10px;
     //top: 50%; //this will determine where on the screen the tab&panel is
   }
   .panel-container.left {
-    right: 100%; //want this to be 100%
+    right: 100%;
+    //want this to be 100%
     margin-right: -$tab-width;
-    -moz-transition:margin 0.3s linear;
-    -o-transition:margin 0.3s linear;
-    -webkit-transition:margin 0.3s linear;
-    -ms-transition:margin 0.3s linear;
-    transition:margin 0.3s linear;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear;
   }
   .panel-container.right {
-    left: 100%; //want this to be 100%
+    left: 100%;
+    //want this to be 100%
     margin-left: -$tab-width;
-    -moz-transition:margin 0.3s linear;
-    -o-transition:margin 0.3s linear;
-    -webkit-transition:margin 0.3s linear;
-    -ms-transition:margin 0.3s linear;
-    transition:margin 0.3s linear;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear;
   }
   .panel-container.bottom {
     top: 100%;
     margin-top: -$tab-height;
-    -moz-transition:margin 0.3s linear;
-    -o-transition:margin 0.3s linear;
-    -webkit-transition:margin 0.3s linear;
-    -ms-transition:margin 0.3s linear;
-    transition:margin 0.3s linear;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear;
   }
   .panel-container.top {
     bottom: 100%;
     margin-bottom: -$tab-height;
-    -moz-transition:margin 0.3s linear;
-    -o-transition:margin 0.3s linear;
-    -webkit-transition:margin 0.3s linear;
-    -ms-transition:margin 0.3s linear;
-    transition:margin 0.3s linear;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear;
   }
   //tab
   .tab {
@@ -142,13 +144,13 @@ $tab-padding: 10px;
   .panel {
     background: $panel-color;
     width: $panel-width - $panel-padding-strong - $panel-padding-weak;
-    height: $outer-height;
+    //height: $outer-height;  //uncommenting this forces it to take the content height
     //filter: alpha(opacity = $opacity * 100);
     //opacity: $opacity;
     padding-top: $panel-padding-top;
     padding-bottom: $panel-padding-bottom;
   }
-  .panel.left{
+  .panel.left {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -157,8 +159,10 @@ $tab-padding: 10px;
     -moz-border-radius-bottomright: $panel-radius;
     -webkit-border-bottom-right-radius: $panel-radius;
     border-bottom-right-radius: $panel-radius;
+
+    //margin-right: -$panel-width;
   }
-  .panel.right{
+  .panel.right {
     position: absolute;
     top: 0px;
     right: 0px;
@@ -171,55 +175,56 @@ $tab-padding: 10px;
   //add to main div to open on click
   .panel-container.left.open {
     margin-right: -$panel-width;
-    -moz-transition:margin 0.3s linear;
-    -o-transition:margin 0.3s linear;
-    -webkit-transition:margin 0.3s linear;
-    -ms-transition:margin 0.3s linear;
-    transition:margin 0.3s linear;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear;
   }
   //add to main div to open on hover
   .panel-container.left.open-hover:hover {
     margin-right: -$panel-width;
-    -moz-transition:margin 0.3s linear;
-    -o-transition:margin 0.3s linear;
-    -webkit-transition:margin 0.3s linear;
-    -ms-transition:margin 0.3s linear;
-    transition:margin 0.3s linear;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear;
   }
   //add to main div to open on hover
   .panel-container.right.open-hover:hover {
     margin-left: -$panel-width;
-    -moz-transition:margin 0.3s linear;
-    -o-transition:margin 0.3s linear;
-    -webkit-transition:margin 0.3s linear;
-    -ms-transition:margin 0.3s linear;
-    transition:margin 0.3s linear;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear;
   }
   //add to main div to open on click
   .panel-container.right.open {
     margin-left: -$panel-width;
-    -moz-transition:margin 0.3s linear;
-    -o-transition:margin 0.3s linear;
-    -webkit-transition:margin 0.3s linear;
-    -ms-transition:margin 0.3s linear;
-    transition:margin 0.3s linear;
+    -moz-transition: margin 0.3s linear;
+    -o-transition: margin 0.3s linear;
+    -webkit-transition: margin 0.3s linear;
+    -ms-transition: margin 0.3s linear;
+    transition: margin 0.3s linear;
   }
-
   .panel-container.hide {
     display: none;
   }
-
   .panel-container.show {
     display: inline;
     filter: alpha(opacity = ($opacity * 100));
     opacity: $opacity;
 
-    -moz-transition:opacity 0.5s linear;
-    -o-transition:opacity 0.5s linear;
-    -webkit-transition:opacity 0.5s linear;
-    -ms-transition:opacity 0.5s linear;
-    transition:opacity 0.5s linear;
+    -moz-transition: opacity 0.5s linear;
+    -o-transition: opacity 0.5s linear;
+    -webkit-transition: opacity 0.5s linear;
+    -ms-transition: opacity 0.5s linear;
+    transition: opacity 0.5s linear;
+  }
 
+  .panel-contents {
+    //nothing to see here, move along
   }
 
   #ui-options {
@@ -233,5 +238,33 @@ $tab-padding: 10px;
     }
   }
 
+  #log {
+    width: 400px;
+    height: 400px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #808080;
+    white-space: pre-wrap;
+    .debug {
+      color: blue;
+    }
+    .info {
+      color: green;
+    }
+    .warn {
+      color: orange;
+    }
+    .fatal {
+      color: red;
+    }
+  }
+
+  #watch {
+
+    td {
+      padding-left: 15px;
+      text-align: right;
+    }
+  }
 
 }

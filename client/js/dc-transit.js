@@ -6,7 +6,7 @@
  * @author Atomizer Software
  */
 
-/*global $:false */
+/*global $:false ui:false */
 
 
 /**
@@ -44,7 +44,6 @@ var Train = function (ln, car, dest, min, locCode) {
 };
 
 //var Station = function(name, ) { //create a station object?
-
 
 var transit = {
     /*
@@ -91,10 +90,6 @@ var transit = {
     /** @define {Array.<Trains>} Hold the estimated train arrivals for the closest station */
     closestStationArrivals: [],
 
-
-
-
-
     browserCapabilities:{
         geoLocation:null,
         localStorage:null
@@ -109,6 +104,8 @@ var transit = {
 
     init: function () {
         'use strict';
+
+        transit.centerRadar();
 
         transit.locationInitialized = transit.getInitialLocation();
 
@@ -134,6 +131,23 @@ var transit = {
             console.log('  LOG: ' + message);
         } else if (type === transit.ERROR) {
             console.log('ERROR: ' + message);
+        }
+    },
+
+    centerRadar:function(){
+        'use strict';
+        var dcX = 2815;  //constants based on DCs location on the gif
+        var dcY = 641;
+        var offsetX, offsetY;
+
+        offsetX = -1 * (dcX - ui.browser.width/2);
+        offsetY = -1 * (dcY - ui.browser.height/2);
+
+        $('#radar-container').css({'backgroundPosition': offsetX.toString() +
+            'px ' + offsetY.toString() + 'px', 'height': ui.browser.height});
+
+        if(ui.browser.width < 500) {
+            $('#radar-container').css('backgroundImage', 'url(http://radar.weather.gov/Conus/RadarImg/latest.gif)')
         }
     },
 
@@ -320,6 +334,9 @@ var transit = {
             transit.out(transit.LOG,'Closest station' + name);
             $('#metro-station').append('<h2>' + name + '</h2>');
         });
+
+        //clear out obnoxious loading text
+        $('#metro-station #loading').remove();
 
         //Populate Arrival Trains
         //check for no trains?

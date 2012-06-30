@@ -64,6 +64,7 @@ body {
   position: absolute;
   top:10px;
   left: 10px;
+  whitespace: pre;
 
   div {
     display: inline-block;
@@ -98,11 +99,21 @@ body {
 #radar-container {
   display: block;
   width: auto;
-  height: 980px;
+  height: auto; //1000px;
   background-image: url(http://radar.weather.gov/Conus/Loop/NatLoop.gif);
   //for mobile, non-looping http://radar.weather.gov/Conus/RadarImg/latest.gif
-  background-position: -2200px -350px;    //change these based on screen sizes.
+  //background-position: -2200px -350px;    //change these based on screen sizes.
   background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+#ui {
+  #ui-options {
+    .panel-contents {
+      float:right;
+      //padding-right:50px;
+    }
+  }
 }
 
 #metro-arrival-board {

@@ -65,46 +65,65 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
 
 <footer>
-
+<button style="position:fixed; bottom: 5px; left: 5px;" onclick="ui.action.destroyAll();">Destroy</button>
 </footer>
 
 <div id="ui">
-    <div id="metro-arrivals" class="panel-container left " style="position: fixed; top: 70px;">
-        <a class="tab left open-click">Metro</a>
+    <div id="metro-arrivals" class="panel-container left " style="z-index: 5; position: fixed; top: 70px;">
+        <a class="tab left open-click">metro</a>
+
         <div class="panel left">
-            <div id="metro-station"></div>
-            <table id="metro-arrival-board">
-                <tr id="metro-arrival-board-header" class="head">
-                    <th> LN </th>
-                    <th> CAR </th>
-                    <th> DEST  </th>
-                    <th class="brd"> MIN</th>
-                </tr>
-            </table>
+            <div class="panel-contents">
+                <div id="metro-station">
+                    <blink id="loading">LOADING...</blink>
+                </div>
+                <table id="metro-arrival-board">
+                    <tr id="metro-arrival-board-header" class="head">
+                        <th> LN</th>
+                        <th> CAR</th>
+                        <th> DEST</th>
+                        <th class="brd"> MIN</th>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 
-    <div id="hover" class="panel-container right open-hover" style="top: 60%;">
-        <a class="tab right">Hover!</a>
-
+    <div id="forecast" class="panel-container right" style="z-index: 2; position: fixed; top: 335px;">
+        <a class="tab right open-click">weather</a>
         <div class="panel right">
-            <p>I am a panel that opens and closes when my tab is hovered on. I use absolutely zero JavaScript to open, I
-                am pure CSS3. As with the 'Click!' panel, I can be enabled or disabled in the options panel. The ability
-                for the user to enable or disable certain panels can be configured by passing 'panelDisable' as either
-                true or false when you initialize. </p>
+            <div class="panel-contents">
+                        <span style="display: block !important; padding-right: 20px; width: 300px; float: right;  text-align: center; font-family: sans-serif; font-size: 12px;"><a
+                                href="http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:20001.1.99999&bannertypeclick=wu_clean2day"
+                                title="Washington, District of Columbia Weather Forecast"><img
+                                src="http://weathersticker.wunderground.com/weathersticker/cgi-bin/banner/ban/wxBanner?bannertype=wu_clean2day_cond&airportcode=KDCA&ForcedCity=Washington&ForcedState=DC&zipcode=20001&language=EN"
+                                alt="Find more about Weather in Washington, DC" width="300"/></a><br></span>
+            </div>
         </div>
     </div>
 
-    <div id="ui-options" class="panel-container left open-hover" style="top: 65%;">
-        <a class="tab left"><img src="img/gear_white.png"></a>
+    <div id="ui-options" class="panel-container right" style="z-index: 1; top: 5px;">
+        <a class="tab right open-click"><img src="img/gear_white.png"></a>
+        <div class="panel right">
+            <div class="panel-contents">
+                <h3>Enable/Disable</h3>
 
-        <div class="panel left">
-            <h3>Enable/Disable</h3>
-            <form id="options-form">
-            </form>
-            <p>Current Location (lat, lon):<br/>
-                <span id="currentLat">???</span>&deg;, <span id="currentLon">???</span>&deg;
-            </p>
+                <form id="options-form">
+                </form>
+                <p>Current Location (lat, lon):<br/>
+                    <span id="currentLat">???</span>&deg;, <span id="currentLon">???</span>&deg;
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="about" class="panel-container right" style=" z-index: 0; position: fixed; bottom: 300px;">
+        <a class="tab right open-click">?</a>
+        <div class="panel right">
+            <div class="panel-contents">
+                <div id="about-container" style="width:200px;"></div>
+                <small>DC-transit is an HTML5 web application developed by <a href="http://atomizersoft.net">Atomizer Software</a>.  We are currently in <a href="http://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha">alpha</a> so please email us with bugs and feedback.</small>
+            </div>
         </div>
     </div>
 </div>
@@ -118,16 +137,18 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
 <!-- scripts concatenated and minified via build script -->
 <script src="js/plugins.js"></script>
-<script src="js/ui.js"></script>
-
-<script src="js/panel.js"></script>
+<!--<script src="js/ui.js"></script>
+<script src="js/panel.js"></script> -->
+<script src="js/ui-dev.js"></script>
 <script src="js/dc-transit.js"></script>
 
 <script>
     $(document).ready(function () {
         'use strict';
 
-        ui.init({'panelStatePersistence':true, 'panelDisable':true});
+        ui.init({'panelStatePersistence':true,
+            'panelDisable':true,
+            'development':true});
 
         transit.init();
 

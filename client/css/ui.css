@@ -9,7 +9,6 @@
   color: white; }
   #ui .panel-container {
     width: 500px;
-    height: 330px;
     position: fixed;
     z-index: 50;
     filter: alpha(opacity=0);
@@ -80,7 +79,6 @@
   #ui .panel {
     background: black;
     width: 385px;
-    height: 330px;
     padding-top: 5px;
     padding-bottom: 5px; }
   #ui .panel.left {
@@ -144,3 +142,21 @@
     display: inline; }
     #ui #ui-options p {
       color: orange; }
+  #ui #log {
+    width: 400px;
+    height: 400px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #808080;
+    white-space: pre-wrap; }
+    #ui #log .debug {
+      color: blue; }
+    #ui #log .info {
+      color: green; }
+    #ui #log .warn {
+      color: orange; }
+    #ui #log .fatal {
+      color: red; }
+  #ui #watch td {
+    padding-left: 15px;
+    text-align: right; }
