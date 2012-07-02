@@ -22,7 +22,7 @@ _/_/_/      _/_/    _/            _/          _/  _/      _/    _/  _/    _/  _/
 <!--[if IE 8]>
 <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js"> <!--<![endif]-->
+<html class="no-js" xmlns="http://www.w3.org/1999/html"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
 
@@ -65,18 +65,16 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
 
 <footer>
-<button style="position:fixed; bottom: 5px; left: 5px;" onclick="ui.action.destroyAll();">Destroy</button>
 </footer>
 
 <div id="ui">
-    <div id="metro-arrivals" class="panel-container left " style="z-index: 5; position: fixed; top: 70px;">
+    <div id="metro-arrivals" class="panel-container left " style="z-index: 10; position: fixed; top: 70px;">
         <a class="tab left open-click">metro</a>
 
         <div class="panel left">
             <div class="panel-contents">
-                <div id="metro-station">
-                    <blink id="loading">LOADING...</blink>
-                </div>
+                <blink id="loading">LOADING...</blink>
+                <div id="metro-station"></div>
                 <table id="metro-arrival-board">
                     <tr id="metro-arrival-board-header" class="head">
                         <th> LN</th>
@@ -93,7 +91,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
         <a class="tab right open-click">weather</a>
         <div class="panel right">
             <div class="panel-contents">
-                        <span style="display: block !important; padding-right: 20px; width: 300px; float: right;  text-align: center; font-family: sans-serif; font-size: 12px;"><a
+                        <span style="display: block !important; width: 300px; float: right;  text-align: center; font-family: sans-serif; font-size: 12px;"><a
                                 href="http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:20001.1.99999&bannertypeclick=wu_clean2day"
                                 title="Washington, District of Columbia Weather Forecast"><img
                                 src="http://weathersticker.wunderground.com/weathersticker/cgi-bin/banner/ban/wxBanner?bannertype=wu_clean2day_cond&airportcode=KDCA&ForcedCity=Washington&ForcedState=DC&zipcode=20001&language=EN"
@@ -102,7 +100,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
         </div>
     </div>
 
-    <div id="ui-options" class="panel-container right" style="z-index: 1; top: 5px;">
+    <div id="ui-options" class="panel-container right" style="z-index: 1; top: 105px;">
         <a class="tab right open-click"><img src="img/gear_white.png"></a>
         <div class="panel right">
             <div class="panel-contents">
@@ -117,30 +115,47 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
         </div>
     </div>
 
-    <div id="about" class="panel-container right" style=" z-index: 0; position: fixed; bottom: 300px;">
+    <div id="about" class="panel-container right" style="z-index: 0; position: fixed; top: 70px;">
         <a class="tab right open-click">?</a>
         <div class="panel right">
             <div class="panel-contents">
-                <div id="about-container" style="width:200px;"></div>
-                <small>DC-transit is an HTML5 web application developed by <a href="http://atomizersoft.net">Atomizer Software</a>.  We are currently in <a href="http://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha">alpha</a> so please email us with bugs and feedback.</small>
+                <div id="about-container"></div>
+                <small>DC-transit is an HTML5 web application developed by <a href="http://atomizersoft.net">Atomizer Software</a>.  We are currently in <a href="http://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha">alpha</a> so please <a href="mailto:mmm@atomizersoft.net?subject=DC-transit Feedback">email</a> us with bugs and feedback.</small>
             </div>
         </div>
     </div>
+
+    <div id="console" class="panel-container right" style="position:fixed; top: 5px; z-index: 6;">
+        <a class="tab right open-click"> >_  </a>
+        <div class="panel right">
+            <div class="panel-contents">
+                <div id="log"></div>
+
+                <form id="location">
+                    <input type="text" name="lat" placeholder="Latitude" /><br />
+                    <input type="text" name="lon" placeholder="Longitude" />
+                </form>
+                <button onclick="transit.test.location();" >Test Location</button>
+                <button onclick="ui.action.destroyAll();">Reset UI</button>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-
-<!-- JavaScript at the bottom for fast page loading: http://developer.yahoo.com/performance/rules.html#js_bottom -->
-
-<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.7.2.min.js"><\/script>')</script>
 
 <!-- scripts concatenated and minified via build script -->
 <script src="js/plugins.js"></script>
-<!--<script src="js/ui.js"></script>
-<script src="js/panel.js"></script> -->
-<script src="js/ui-dev.js"></script>
-<script src="js/dc-transit.js"></script>
+
+<script src="js/vendor/ui-dev.js"></script>
+<script src="js/transit.js"></script>
+<script src="js/transit-position.js"></script>
+<script src="js/transit-log.js"></script>
+<script src="js/transit-metro.js"></script>
+<script src="js/transit-util.js"></script>
+<script src="js/transit-test.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -148,7 +163,8 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
         ui.init({'panelStatePersistence':true,
             'panelDisable':true,
-            'development':true});
+            'development':false,
+            'debugPanel' : true});
 
         transit.init();
 

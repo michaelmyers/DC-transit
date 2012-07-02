@@ -8,7 +8,7 @@
 #ui {
   color: white; }
   #ui .panel-container {
-    width: 500px;
+    width: 310px;
     position: fixed;
     z-index: 50;
     filter: alpha(opacity=0);
@@ -57,7 +57,7 @@
   #ui .tab.left {
     position: absolute;
     top: 0;
-    left: 450px;
+    left: 260px;
     padding-right: 15px;
     -moz-border-radius-topright: 15px;
     -webkit-border-top-right-radius: 15px;
@@ -68,7 +68,7 @@
   #ui .tab.right {
     position: absolute;
     top: 0;
-    right: 450px;
+    right: 260px;
     padding-left: 15px;
     -moz-border-radius-topleft: 15px;
     -webkit-border-top-left-radius: 15px;
@@ -78,7 +78,7 @@
     border-bottom-left-radius: 15px; }
   #ui .panel {
     background: black;
-    width: 385px;
+    width: 195px;
     padding-top: 5px;
     padding-bottom: 5px; }
   #ui .panel.left {
@@ -100,28 +100,28 @@
     -webkit-border-bottom-left-radius: 15px;
     border-bottom-left-radius: 15px; }
   #ui .panel-container.left.open {
-    margin-right: -450px;
+    margin-right: -260px;
     -moz-transition: margin 0.3s linear;
     -o-transition: margin 0.3s linear;
     -webkit-transition: margin 0.3s linear;
     -ms-transition: margin 0.3s linear;
     transition: margin 0.3s linear; }
   #ui .panel-container.left.open-hover:hover {
-    margin-right: -450px;
+    margin-right: -260px;
     -moz-transition: margin 0.3s linear;
     -o-transition: margin 0.3s linear;
     -webkit-transition: margin 0.3s linear;
     -ms-transition: margin 0.3s linear;
     transition: margin 0.3s linear; }
   #ui .panel-container.right.open-hover:hover {
-    margin-left: -450px;
+    margin-left: -260px;
     -moz-transition: margin 0.3s linear;
     -o-transition: margin 0.3s linear;
     -webkit-transition: margin 0.3s linear;
     -ms-transition: margin 0.3s linear;
     transition: margin 0.3s linear; }
   #ui .panel-container.right.open {
-    margin-left: -450px;
+    margin-left: -260px;
     -moz-transition: margin 0.3s linear;
     -o-transition: margin 0.3s linear;
     -webkit-transition: margin 0.3s linear;
@@ -143,7 +143,7 @@
     #ui #ui-options p {
       color: orange; }
   #ui #log {
-    width: 400px;
+    width: 300px;
     height: 400px;
     overflow-x: hidden;
     overflow-y: auto;

@@ -107,14 +107,19 @@ body {
   overflow: hidden;
 }
 
-#ui {
-  #ui-options {
-    .panel-contents {
-      float:right;
-      //padding-right:50px;
-    }
+#ui-options {
+  .panel-contents {
+    float:right;
+    //padding-right:50px;
   }
 }
+
+#about-container {
+    width: 200px;
+    padding-left: 40px;
+}
+
+
 
 #metro-arrival-board {
   font-family: 'TimesSquareRegular';

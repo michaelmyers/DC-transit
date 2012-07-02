@@ -28,7 +28,7 @@ $tab-padding: 10px;
 
 #ui {
   //widths
-  $outer-width: 500px;
+  $outer-width: 310px;
   $tab-width: 50px;
   $panel-width: $outer-width - $tab-width;
   //heights
@@ -239,7 +239,7 @@ $tab-padding: 10px;
   }
 
   #log {
-    width: 400px;
+    width: 300px;
     height: 400px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -260,7 +260,6 @@ $tab-padding: 10px;
   }
 
   #watch {
-
     td {
       padding-left: 15px;
       text-align: right;

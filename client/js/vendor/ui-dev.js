@@ -818,6 +818,9 @@ var ui = {
             ui.config.debugPanel = arg.debugPanel;
         }
 
+        //for debug only!
+        //ui.action.destroyAll();
+
         ui.setup.browserInfo();
 
         ui.localStorage.retrieve();
@@ -843,10 +846,14 @@ var ui = {
         if ( ui.browser.touchEnable ) {
             ui.out.info('Touch screen enabled device');
             ui.setup.touch();
-        } /*else {  //this else statement is just for development to practice on desktop that has no touch
-         ui.out.debug('I dont have touch but going to start it anyways' );
+        } else {
+            ui.setup.click();
+        }
+
+        /*else {  //this else statement is just for development to practice on desktop that has no touch
+         ui.out.debug('I dont have touch but going to start it anyways, im a bus );
          ui.setup.touch();
-         }  */
+         } */
 
         //Init all done
         ui.initialized.ui = true;
@@ -975,6 +982,17 @@ var ui = {
                     //something is wrong
                     ui.out.warn(ui.ids[key] + ' needs a open class');
                 }
+
+                //check original z index
+                var originalZIndex = $('#'+ui.ids[key]).css('z-index');
+                if (originalZIndex === null || originalZIndex === undefined) {
+                    ui.panels[key].zIndex = 0;
+                } else {
+                    ui.panels[key].zIndex = originalZIndex;
+                }
+
+
+
             }
         }
         ui.localStorage.update();
@@ -1054,8 +1072,8 @@ var ui = {
             }
         }
         style += '</style>\n';
-        ui.out.debug('New Style: ' + style); //I don't know why this rarely gets displayed in the panel log console
-        ui.out.info('Appending Style');
+        //ui.out.debug('New Style: ' + style); //I don't know why this rarely gets displayed in the panel log console
+        ui.out.info('Appending Style ' + style.slice(22, 40) + '...');
         $('head').append(style);
     },
 
@@ -1117,6 +1135,7 @@ ui.Panel = function (id) {
     this.width = null;
     this.margin = null; //opposite of location, the margin that is manipulated
     this.openMethod = null; //method for opening, either hover or click, possibly more later
+    this.zIndex = null;
 };
 
 /**
@@ -1231,6 +1250,7 @@ ui.action = {
         //ui.updateLocalStorage();  //maybe switch to beforeBrowsercloses or something similar
     },
 
+
     closeTab:function (id) {
         'use strict';
         //ui.out.debug('closeTab ' + id);
@@ -1296,6 +1316,26 @@ ui.action = {
         }
     },
 
+    resetZIndexes:function () {
+        'use strict';
+        for(var key in ui.ids) {
+            if(ui.ids.hasOwnProperty(key)) {
+                var originalZIndex = ui.panels[key].zIndex;
+                var id = ui.ids[key];
+                //ui.out.debug('Resetting ' + id + ' to ' + originalZIndex + ' z-index');
+                $('#' + id).css('z-index',originalZIndex);
+            }
+        }
+    },
+
+    bringForward:function (id) {
+        'use strict';
+        ui.out.debug('Bringing ' + id + ' forward');
+        $('#' + id).css('z-index', 50);
+
+
+    },
+
     handleCheckboxChange:function () {
         'use strict';
         //ui.out('checkBox Changed');
@@ -1330,30 +1370,42 @@ ui.action = {
         if(element === undefined) {
             ui.out.warn('Target on touch event is undefined');
         }
-        eventDirection = event.direction;
+
         parentID = $(element).parents('.panel-container').attr('id');
+        ui.out.debug('Detected ' + eventType + ' on ' + parentID);
 
-        ui.out.debug('Event ' + eventType + ' to the ' + eventDirection + ' on ' + parentID);
+        //DRAG OR SWIPE
+        if ( eventType === "drag" || eventType === "swipe") {
+            eventDirection = event.direction;
+            ui.out.debug(eventType + ' to the ' + eventDirection);
 
-        panelInQuestion = ui.panels[ui.ids.indexOf(parentID)];
+            panelInQuestion = ui.panels[ui.ids.indexOf(parentID)];
 
-        if(panelInQuestion === undefined) {
-            ui.out.warn('Panel for touch event not found');
-            return;
-        }
+            if(panelInQuestion === undefined) {
+                ui.out.warn('Panel for touch event not found');
+                return;
+            }
 
-        panelLocation = panelInQuestion.location;
-        panelOppositeLocation = panelInQuestion.margin; //margin contains the opposite of location
+            panelLocation = panelInQuestion.location;
+            panelOppositeLocation = panelInQuestion.margin; //margin contains the opposite of location
 
-        if (panelLocation === eventDirection) {
-            ui.out.debug('Closing ' + parentID + ' from ' + eventType + ' ' + eventDirection);
-            ui.action.closeTab(parentID);
-        } else if (panelOppositeLocation === eventDirection) {
-            ui.out.debug('Opening ' + parentID + ' from ' + eventType + ' ' + eventDirection);
-            ui.action.openTab(parentID);
-        }
-        else {
-            ui.out.warn('No action on ' + parentID + ' from ' + eventType + ' ' + eventDirection);
+            if (panelLocation === eventDirection) {
+                ui.out.debug('Closing ' + parentID + ' from ' + eventType + ' ' + eventDirection);
+                ui.action.closeTab(parentID);
+            } else if (panelOppositeLocation === eventDirection) {
+                ui.out.debug('Opening ' + parentID + ' from ' + eventType + ' ' + eventDirection);
+                ui.action.openTab(parentID);
+            }
+            else {
+                ui.out.warn('No action on ' + parentID + ' from ' + eventType + ' ' + eventDirection);
+                ui.out.warn('Panel location is ' + panelLocation + ' and opposite is ' + panelOppositeLocation);
+            }
+        } else if (eventType === "tap") {
+            ui.action.resetZIndexes();
+            ui.action.bringForward(parentID);
+        } else {
+            //Fall through
+            ui.out.warn('Could not find eventType ' + eventType + ' for ' + parentID);
         }
     },
 
@@ -1363,7 +1415,7 @@ ui.action = {
         ui.ids = [];
         ui.valueStore = [];
         localStorage.removeItem(ui.localStorage._getKey());
-        ui.out.warn('BOOOM!!!');
+        ui.out.warn('BOOOM!!!  UI Reset');
     }
 
 };
@@ -1547,6 +1599,21 @@ ui.setup = {
 
     },
 
+    click : function () {
+        'use strict';
+
+        $("#ui .panel-container").click(function () {
+            var id = $(this).attr('id');
+            //ui.out.debug(id + ' clicked');
+            ui.action.resetZIndexes();
+            ui.action.bringForward(id);
+
+        });
+
+        ui.out.info('Click Initialized');
+
+    },
+
     touch : function () {
         'use strict';
 
@@ -1559,11 +1626,12 @@ ui.setup = {
         hammer.ondrag = function (ev) {
             ui.action.handleTouchEvent(ev);
         };
-        /*hammer.ontap = function(ev) {
-         ui.out.debug('Just saw a tap');
-         ui.temp = ev;
-         ui.out.object(ev);
-         }; */
+        hammer.ontap = function(ev) {
+            ui.action.handleTouchEvent(ev);
+         //ui.out.debug('Just saw a tap');
+         //ui.temp = ev;
+         // ui.out.object(ev);
+         };
 
         ui.initialized.touch = true;
         ui.out.info('Touch Initialized');
