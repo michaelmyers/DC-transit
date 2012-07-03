@@ -863,12 +863,12 @@ var ui = {
 
     log : function (message) { //public function for accessing a debug-panel
         'use strict';
-        if (ui.setup.debugPanel) {
+        if (ui.config.debugPanel) {
             if(!ui.initialized.logConsole) {
                 ui.out.warn('Log Console not initialized');
                 ui.setup.logConsole();
             }
-            ui.log.log(message);
+            ui.out.log(message);
         }
     },
     monitorTabs:function () {
@@ -1073,7 +1073,7 @@ var ui = {
         }
         style += '</style>\n';
         //ui.out.debug('New Style: ' + style); //I don't know why this rarely gets displayed in the panel log console
-        ui.out.info('Appending Style ' + style.slice(22, 40) + '...');
+        ui.out.info('Appending Style ' + style.slice(24, 50) + '...');
         $('head').append(style);
     },
 
@@ -1194,6 +1194,7 @@ ui.out = {
                 ui.out.log(output);
             }
         }
+
     },
     //outputs to debug panel
     log:function (message) {
@@ -1215,7 +1216,7 @@ ui.out = {
             );
             document.getElementById('log').scrollTop = 9999999;
         } else {
-            ui.out(message);
+            ui.out.push(message);
         }
     }
 
@@ -1553,7 +1554,7 @@ ui.setup = {
         'use strict';
         if(!$('#log')) {
             ui.out.warn('HTML ID #log not found');
-            ui.setup.debugPanel = false;
+            ui.config.debugPanel = false;
             return;
         }
 
