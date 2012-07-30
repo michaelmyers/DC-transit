@@ -764,7 +764,8 @@ var ui = {
         panelStatePersistence:true,
         panelDisable:true,
         development:false,
-        debugPanel:false
+        debugPanel:false,
+        strictControl:false
     },
 
     //Browser specific characteristics
@@ -800,7 +801,8 @@ var ui = {
         'use strict';
         //check to see if any arguments were passed for configuration
         //TODO: clean this up, there has to be a better way to do ui.  I could probably get rid of the multiple arguments bit.
-        var arg = arguments[0];
+        var args = arguments;
+        var arg = args[0];
         if (arg.panelStatePersistence !== undefined) {
             ui.out.info('Config panelStatePersistence: ' + arg.panelStatePersistence);
             ui.config.panelStatePersistence = arg.panelStatePersistence;
@@ -818,65 +820,89 @@ var ui = {
             ui.config.debugPanel = arg.debugPanel;
         }
 
-        //for debug only!
-        //ui.action.destroyAll();
+        if (arg.strictControl !== undefined) {
+            ui.out.info('Config strictControl: ' + arg.development);
+            ui.config.strictControl = arg.strictControl;
+        }
+        if(window.onload !== null) {
+            ui.out.fatal('window.onload already defined.  I am about to override it.');
+        }
 
-        ui.setup.browserInfo();
+        window.onload = function () {  //need to wait until everything is loaded
+            ui.setup.browserInfo();
+            ui.localStorage.retrieve();
 
-        ui.localStorage.retrieve();
-
-        $(window).load(function () {  //need to wait until everything is loaded before determine sizes
             ui.determinePanelSize();
             ui.modifyPanelSizeClick();
-            ui.action.displayTabs();
-        });
 
-        //Build out your options to disable tabs
-        ui.setup.disablePanelOptionsForm();
+            //Build out your options to disable tabs
+            ui.setup.disablePanelOptionsForm();
 
-        //Start UI monitors
-        ui.monitorForms();
-        ui.monitorTabs();
-        ui.monitorUnload();
+            //Start UI monitors
+            ui.monitorForms();
+            ui.monitorTabs();
+            ui.monitorUnload();
 
-        //Setup things
-        ui.setup.logConsole(); //if disabled
-        //ui.setup.watch();
-        //Check for touch
-        if ( ui.browser.touchEnable ) {
-            ui.out.info('Touch screen enabled device');
-            ui.setup.touch();
-        } else {
-            ui.setup.click();
-        }
+            //Setup things
+            ui.setup.logConsole(); //if disabled
+            //ui.setup.watch();
+            //Check for touch
+            if ( ui.browser.touchEnable ) {
+                ui.out.info('Touch screen enabled device');
+                ui.setup.touch();
+            } else {
+                ui.out.debug('No touch screen');
+                ui.setup.click();
+            }
+
+            if (ui.config.strictControl === false) {
+                ui.out.debug('Strict Control not enabled');
+                ui.action.displayPanels();
+            }
+            //Init all done
+            ui.initialized.ui = true;
+            ui.out.info('UI Initialized');
+
+            if( typeof args[1] === 'function') {
+                //console.log('arg was a function');
+                var callback = args[1];
+                callback();
+            } /*else {
+                //console.log('arg was not a function');
+               // console.log(args[1]);
+            }  */
+
+        };
+
+
 
         /*else {  //this else statement is just for development to practice on desktop that has no touch
          ui.out.debug('I dont have touch but going to start it anyways, im a bus );
          ui.setup.touch();
          } */
 
-        //Init all done
-        ui.initialized.ui = true;
-        ui.out.info('UI Initialized');
+
 
     },
 
     log : function (message) { //public function for accessing a debug-panel
         'use strict';
-        if (ui.setup.debugPanel) {
+        if (ui.config.debugPanel) {
             if(!ui.initialized.logConsole) {
                 ui.out.warn('Log Console not initialized');
                 ui.setup.logConsole();
             }
-            ui.log.log(message);
+            ui.out.log(message);
         }
     },
     monitorTabs:function () {
         'use strict';
+
         $('.open-click').click(function () {  //with this test-click and test-hover go on the entire div
             $(this).parent().toggleClass('open');
             ui.action.toggled($(this).parent().attr('id'));
         });
+        ui.out.debug('Monitoring tabs');
     },
     monitorForms:function () {
         'use strict';
@@ -888,6 +914,8 @@ var ui = {
             //ui.formUpdate();
             ui.action.handleCheckboxChange();
         });
+
+        ui.out.debug('Monitoring forms');
     },
     monitorUnload:function () { //opera does not support onbeforeunload
         'use strict';
@@ -895,6 +923,8 @@ var ui = {
             ui.out.info('onbeforeunload triggered');
             ui.localStorage.update();
         };
+
+        ui.out.debug('Monitoring unload');
     },
 
     updateWatchList: function () {
@@ -1073,7 +1103,7 @@ var ui = {
         }
         style += '</style>\n';
         //ui.out.debug('New Style: ' + style); //I don't know why this rarely gets displayed in the panel log console
-        ui.out.info('Appending Style ' + style.slice(22, 40) + '...');
+        ui.out.info('Appending Style ' + style.slice(24, 50) + '...');
         $('head').append(style);
     },
 
@@ -1091,11 +1121,11 @@ var ui = {
 
                 //check if disabled
                 if (tempPanel.isDisabled) {
-                    ui.action.hideTab(tempPanel.id);
+                    ui.action.hidePanel(tempPanel.id);
                 }
                 //check if open or closed
                 if (tempPanel.isOpen) {
-                    ui.action.openTab(tempPanel.id);
+                    ui.action.openPanel(tempPanel.id);
                 }
             }
 
@@ -1194,6 +1224,7 @@ ui.out = {
                 ui.out.log(output);
             }
         }
+
     },
     //outputs to debug panel
     log:function (message) {
@@ -1215,7 +1246,7 @@ ui.out = {
             );
             document.getElementById('log').scrollTop = 9999999;
         } else {
-            ui.out(message);
+            ui.out.push(message);
         }
     }
 
@@ -1251,7 +1282,7 @@ ui.action = {
     },
 
 
-    closeTab:function (id) {
+    closePanel:function (id) {
         'use strict';
         //ui.out.debug('closeTab ' + id);
         $('#' + id).removeClass('open');
@@ -1260,7 +1291,7 @@ ui.action = {
         tempPanel.isOpen = false;
     },
 
-    openTab:function (id) {
+    openPanel:function (id) {
         'use strict';
         //ui.out.debug('openTab ' + id);
         $('#' + id).addClass('open');
@@ -1269,7 +1300,7 @@ ui.action = {
         tempPanel.isOpen = true;
     },
 
-    hideTab:function (id) {
+    hidePanel:function (id) {
         'use strict';
         //ui.out.debug('hideTab ' + id);
         //$('#'+id).addClass('hide');
@@ -1282,7 +1313,7 @@ ui.action = {
         tempPanel.isDisabled = true;
     },
 
-    showTab:function (id) {
+    showPanel:function (id) {
         'use strict';
         //ui.out.debug('showTab ' + id);
         //$('#'+id).removeClass('hide');
@@ -1295,7 +1326,7 @@ ui.action = {
         tempPanel.isDisabled = false;
     },
 
-    displayTabs:function () {
+    displayPanels:function () {
         'use strict';
         try {
             $('#ui div').siblings('.panel-container').each(function () {
@@ -1336,6 +1367,17 @@ ui.action = {
 
     },
 
+    centerPanel:function (id) {
+        'use strict';
+        var thePanel = ui.panels[ui.ids.indexOf(id)];
+        $('#' + id).css('left', function () {
+             return ui.browser.width/2 - thePanel.width/2;
+            });
+        $('#' + id).css('top', function () {
+             return ui.browser.height/2 - thePanel.height/2;
+        });
+    },
+
     handleCheckboxChange:function () {
         'use strict';
         //ui.out('checkBox Changed');
@@ -1344,11 +1386,11 @@ ui.action = {
             if ($(this).is(':checked')) {
                 id = $(this).attr('value');
                 //ui.out(id + ' is checked');
-                ui.action.showTab(id);
+                ui.action.showPanel(id);
             } else if (!$(this).is(':checked')) {
                 id = $(this).attr('value');
                 //ui.out(id + ' is unchecked');
-                ui.action.hideTab(id);
+                ui.action.hidePanel(id);
             }
         });
 
@@ -1391,10 +1433,10 @@ ui.action = {
 
             if (panelLocation === eventDirection) {
                 ui.out.debug('Closing ' + parentID + ' from ' + eventType + ' ' + eventDirection);
-                ui.action.closeTab(parentID);
+                ui.action.closePanel(parentID);
             } else if (panelOppositeLocation === eventDirection) {
                 ui.out.debug('Opening ' + parentID + ' from ' + eventType + ' ' + eventDirection);
-                ui.action.openTab(parentID);
+                ui.action.openPanel(parentID);
             }
             else {
                 ui.out.warn('No action on ' + parentID + ' from ' + eventType + ' ' + eventDirection);
@@ -1553,7 +1595,7 @@ ui.setup = {
         'use strict';
         if(!$('#log')) {
             ui.out.warn('HTML ID #log not found');
-            ui.setup.debugPanel = false;
+            ui.config.debugPanel = false;
             return;
         }
 

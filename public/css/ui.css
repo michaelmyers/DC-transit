@@ -10,7 +10,7 @@
   #ui .panel-container {
     width: 310px;
     position: fixed;
-    z-index: 50;
+    z-index: 0;
     filter: alpha(opacity=0);
     opacity: 0; }
   #ui .panel-container.left {
@@ -81,6 +81,11 @@
     width: 195px;
     padding-top: 5px;
     padding-bottom: 5px; }
+  #ui .panel.center {
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    padding: 10px; }
   #ui .panel.left {
     position: absolute;
     top: 0px;
