@@ -764,7 +764,8 @@ var ui = {
         panelStatePersistence:true,
         panelDisable:true,
         development:false,
-        debugPanel:false
+        debugPanel:false,
+        strictControl:false
     },
 
     //Browser specific characteristics
@@ -800,7 +801,8 @@ var ui = {
         'use strict';
         //check to see if any arguments were passed for configuration
         //TODO: clean this up, there has to be a better way to do ui.  I could probably get rid of the multiple arguments bit.
-        var arg = arguments[0];
+        var args = arguments;
+        var arg = args[0];
         if (arg.panelStatePersistence !== undefined) {
             ui.out.info('Config panelStatePersistence: ' + arg.panelStatePersistence);
             ui.config.panelStatePersistence = arg.panelStatePersistence;
@@ -818,46 +820,63 @@ var ui = {
             ui.config.debugPanel = arg.debugPanel;
         }
 
-        //for debug only!
-        //ui.action.destroyAll();
+        if (arg.strictControl !== undefined) {
+            ui.out.info('Config strictControl: ' + arg.development);
+            ui.config.strictControl = arg.strictControl;
+        }
 
-        ui.setup.browserInfo();
+        $(window).load(function () {  //need to wait until everything is loaded
+            ui.setup.browserInfo();
+            ui.localStorage.retrieve();
 
-        ui.localStorage.retrieve();
-
-        $(window).load(function () {  //need to wait until everything is loaded before determine sizes
             ui.determinePanelSize();
             ui.modifyPanelSizeClick();
-            ui.action.displayTabs();
+
+            //Build out your options to disable tabs
+            ui.setup.disablePanelOptionsForm();
+
+            //Start UI monitors
+            ui.monitorForms();
+            ui.monitorTabs();
+            ui.monitorUnload();
+
+            //Setup things
+            ui.setup.logConsole(); //if disabled
+            //ui.setup.watch();
+            //Check for touch
+            if ( ui.browser.touchEnable ) {
+                ui.out.info('Touch screen enabled device');
+                ui.setup.touch();
+            } else {
+                ui.setup.click();
+            }
+
+            if (ui.config.strictControl === false) {
+                ui.action.displayPanels();
+            }
+            //Init all done
+            ui.initialized.ui = true;
+            ui.out.info('UI Initialized');
+
+            if( typeof args[1] === 'function') {
+                //console.log('arg was a function');
+                var callback = args[1];
+                callback();
+            } /*else {
+                //console.log('arg was not a function');
+               // console.log(args[1]);
+            }  */
+
         });
 
-        //Build out your options to disable tabs
-        ui.setup.disablePanelOptionsForm();
 
-        //Start UI monitors
-        ui.monitorForms();
-        ui.monitorTabs();
-        ui.monitorUnload();
-
-        //Setup things
-        ui.setup.logConsole(); //if disabled
-        //ui.setup.watch();
-        //Check for touch
-        if ( ui.browser.touchEnable ) {
-            ui.out.info('Touch screen enabled device');
-            ui.setup.touch();
-        } else {
-            ui.setup.click();
-        }
 
         /*else {  //this else statement is just for development to practice on desktop that has no touch
          ui.out.debug('I dont have touch but going to start it anyways, im a bus );
          ui.setup.touch();
          } */
 
-        //Init all done
-        ui.initialized.ui = true;
-        ui.out.info('UI Initialized');
+
 
     },
 
@@ -1091,11 +1110,11 @@ var ui = {
 
                 //check if disabled
                 if (tempPanel.isDisabled) {
-                    ui.action.hideTab(tempPanel.id);
+                    ui.action.hidePanel(tempPanel.id);
                 }
                 //check if open or closed
                 if (tempPanel.isOpen) {
-                    ui.action.openTab(tempPanel.id);
+                    ui.action.openPanel(tempPanel.id);
                 }
             }
 
@@ -1252,7 +1271,7 @@ ui.action = {
     },
 
 
-    closeTab:function (id) {
+    closePanel:function (id) {
         'use strict';
         //ui.out.debug('closeTab ' + id);
         $('#' + id).removeClass('open');
@@ -1261,7 +1280,7 @@ ui.action = {
         tempPanel.isOpen = false;
     },
 
-    openTab:function (id) {
+    openPanel:function (id) {
         'use strict';
         //ui.out.debug('openTab ' + id);
         $('#' + id).addClass('open');
@@ -1270,7 +1289,7 @@ ui.action = {
         tempPanel.isOpen = true;
     },
 
-    hideTab:function (id) {
+    hidePanel:function (id) {
         'use strict';
         //ui.out.debug('hideTab ' + id);
         //$('#'+id).addClass('hide');
@@ -1283,7 +1302,7 @@ ui.action = {
         tempPanel.isDisabled = true;
     },
 
-    showTab:function (id) {
+    showPanel:function (id) {
         'use strict';
         //ui.out.debug('showTab ' + id);
         //$('#'+id).removeClass('hide');
@@ -1296,7 +1315,7 @@ ui.action = {
         tempPanel.isDisabled = false;
     },
 
-    displayTabs:function () {
+    displayPanels:function () {
         'use strict';
         try {
             $('#ui div').siblings('.panel-container').each(function () {
@@ -1337,6 +1356,17 @@ ui.action = {
 
     },
 
+    centerPanel:function (id) {
+        'use strict';
+        var thePanel = ui.panels[ui.ids.indexOf(id)];
+        $('#' + id).css('left', function () {
+             return ui.browser.width/2 - thePanel.width/2;
+            });
+        $('#' + id).css('top', function () {
+             return ui.browser.height/2 - thePanel.height/2;
+        });
+    },
+
     handleCheckboxChange:function () {
         'use strict';
         //ui.out('checkBox Changed');
@@ -1345,11 +1375,11 @@ ui.action = {
             if ($(this).is(':checked')) {
                 id = $(this).attr('value');
                 //ui.out(id + ' is checked');
-                ui.action.showTab(id);
+                ui.action.showPanel(id);
             } else if (!$(this).is(':checked')) {
                 id = $(this).attr('value');
                 //ui.out(id + ' is unchecked');
-                ui.action.hideTab(id);
+                ui.action.hidePanel(id);
             }
         });
 
@@ -1392,10 +1422,10 @@ ui.action = {
 
             if (panelLocation === eventDirection) {
                 ui.out.debug('Closing ' + parentID + ' from ' + eventType + ' ' + eventDirection);
-                ui.action.closeTab(parentID);
+                ui.action.closePanel(parentID);
             } else if (panelOppositeLocation === eventDirection) {
                 ui.out.debug('Opening ' + parentID + ' from ' + eventType + ' ' + eventDirection);
-                ui.action.openTab(parentID);
+                ui.action.openPanel(parentID);
             }
             else {
                 ui.out.warn('No action on ' + parentID + ' from ' + eventType + ' ' + eventDirection);
