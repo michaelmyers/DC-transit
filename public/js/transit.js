@@ -45,6 +45,9 @@ var transit = {
     init:function () {
         'use strict';
 
+        //ui.action.hidePanel('console');
+
+
         transit.centerRadar();
 
         transit.position.init();
@@ -64,8 +67,14 @@ var transit = {
             ui.action.hideTab('console');
         }    */
 
-        transit.initialized = true;
+        ui.action.hidePanel('console');
+        ui.panels[ui.ids.indexOf('console')].isDisabled = true;
+        ui.panels[ui.ids.indexOf('about')].canDisable = false;
 
+        ui.setup.clearPanelOptionsForm();
+        ui.setup.disablePanelOptionsForm();
+        ui.monitorForms();
+        transit.initialized = true;
     },
 
     centerRadar:function () {    //this is a little hacky
@@ -80,6 +89,7 @@ var transit = {
         $('#radar-container').css({'backgroundPosition':offsetX.toString() +
             'px ' + offsetY.toString() + 'px', 'height':ui.browser.height});
 
+        transit.out.info('Browser is ' + ui.browser.width + ' X ' + ui.browser.height);
         if (ui.browser.width < 500) {
             $('#radar-container').css('backgroundImage', 'url(http://radar.weather.gov/Conus/RadarImg/latest.gif)');
         }

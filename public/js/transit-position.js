@@ -36,6 +36,7 @@ transit.position = {
             }
             else {
                 transit.out.info('Geolocation is not supported for this Browser/OS version yet.');
+                alert('Your browser doesn\'t support geolocation so we can\'t help you with location based services');
                 transit.browserCapabilities.geoLocation = false;
                 return false;
             }
@@ -82,7 +83,8 @@ transit.position = {
                     case 3:
                         message = 'GPS Timed Out :-(';  //   3: timed out
                 }
-                transit.out(transit.ERROR, 'geolocation error code: ' + message);
+                alert('We could\'t get your location');
+                transit.out.warn('geolocation error code: ' + message);
             });
         }
     },

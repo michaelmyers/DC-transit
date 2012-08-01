@@ -60,6 +60,20 @@ body {
   background-color: #bee8ff;//#A0CFEC; //#87ceeb;
 }
 
+a {
+  color: red;
+  text-decoration: none;
+
+}
+
+a:visited {
+  color: red;
+}
+
+a:hover {
+  color: #ff4500;
+}
+
 #dc-transit-logo {
   position: absolute;
   top:10px;
@@ -91,7 +105,7 @@ body {
   .beta {
     color: #ff4500;
     font-family: 'TimesSquareRegular';
-    font-size: 2em;
+    font-size: 1.2em;
     padding-left: 10px;
   }
 }

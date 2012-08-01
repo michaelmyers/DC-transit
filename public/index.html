@@ -35,8 +35,6 @@ _/_/_/      _/_/    _/            _/          _/  _/      _/    _/  _/    _/  _/
 
     <meta name="viewport" content="width=device-width">
 
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
-
     <link rel="stylesheet" href="css/main.css">
 
     <link rel="stylesheet" href="css/dc-transit.css">
@@ -63,14 +61,12 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
     </div>
 </header>
 
-
 <footer>
 </footer>
 
 <div id="ui">
     <div id="metro-arrivals" class="panel-container left " style="z-index: 10; position: fixed; top: 70px;">
         <a class="tab left open-click">metro</a>
-
         <div class="panel left">
             <div class="panel-contents">
                 <blink id="loading">LOADING...</blink>
@@ -105,9 +101,8 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
         <div class="panel right">
             <div class="panel-contents">
                 <h3>Enable/Disable</h3>
-
-                <form id="options-form">
-                </form>
+                    <form id="options-form">
+                    </form>
                 <p>Current Location (lat, lon):<br/>
                     <span id="currentLat">???</span>&deg;, <span id="currentLon">???</span>&deg;
                 </p>
@@ -164,21 +159,16 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
         ui.init({'panelStatePersistence':true,
             'panelDisable':true,
             'development':false,
-            'debugPanel' : true});
-
-        transit.init();
-
+            'debugPanel' : true}, function () {
+            transit.init();
+        });
     });
 
 </script>
 
-<!-- end scripts -->
-
-<!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
-mathiasbynens.be/notes/async-analytics-snippet -->
 <script>
     var _gaq = [
-        ['_setAccount', 'UA-XXXXX-X'],
+        ['_setAccount', 'UA-33824108-1'],
         ['_trackPageview']
     ];
     (function (d, t) {

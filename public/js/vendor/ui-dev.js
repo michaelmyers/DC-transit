@@ -824,50 +824,16 @@ var ui = {
             ui.out.info('Config strictControl: ' + arg.development);
             ui.config.strictControl = arg.strictControl;
         }
-        window.onload = function () { //need to wait until everything is loaded
+        if(window.onload !== null) {
+            ui.out.fatal('window.onload already defined.  I am about to override it.');
+        }
+
+        window.onload = function () {  //need to wait until everything is loaded
             ui.setup.browserInfo();
             ui.localStorage.retrieve();
 
             ui.determinePanelSize();
             ui.modifyPanelSizeClick();
-            //Build out your options to disable tabs
-            ui.setup.disablePanelOptionsForm();
-
-            //Start UI monitors
-            ui.monitorForms();
-            ui.monitorTabs();
-            ui.monitorUnload();
-
-            //Setup things
-            ui.setup.logConsole(); //if disabled
-            //ui.setup.watch();
-            //Check for touch
-            if ( ui.browser.touchEnable ) {
-                ui.out.info('Touch screen enabled device');
-                ui.setup.touch();
-            } else {
-                ui.setup.click();
-            }
-
-            if (ui.config.strictControl === false) {
-                ui.action.displayPanels();
-            }
-            //Init all done
-            ui.initialized.ui = true;
-            ui.out.info('UI Initialized');
-
-            if( typeof args[1] === 'function') {
-                //console.log('arg was a function');
-                var callback = args[1];
-                callback();
-            } /*else {
-                //console.log('arg was not a function');
-               // console.log(args[1]);
-            }  */
-
-        });
-
-=======
 
             //Build out your options to disable tabs
             ui.setup.disablePanelOptionsForm();
@@ -908,15 +874,10 @@ var ui = {
 
         };
 
-
-
-
         /*else {  //this else statement is just for development to practice on desktop that has no touch
          ui.out.debug('I dont have touch but going to start it anyways, im a bus );
          ui.setup.touch();
          } */
-
-
 
     },
 
@@ -1193,6 +1154,7 @@ ui.Panel = function (id) {
     this.id = id;
     this.isOpen = false;
     this.isDisabled = false;
+    this.canDisable = true;
     this.location = null; //either left, right  top, bottom
     this.vertPos = null;
     this.horiPos = null;
@@ -1337,7 +1299,7 @@ ui.action = {
 
     hidePanel:function (id) {
         'use strict';
-        //ui.out.debug('hideTab ' + id);
+        ui.out.debug('hideTab ' + id);
         //$('#'+id).addClass('hide');
         $('#' + id).removeClass('show');
         setTimeout(function () {
@@ -1415,16 +1377,15 @@ ui.action = {
 
     handleCheckboxChange:function () {
         'use strict';
-        //ui.out('checkBox Changed');
         $('#options-form input:checkbox, name:panel').each(function () {
             var id;
             if ($(this).is(':checked')) {
                 id = $(this).attr('value');
-                //ui.out(id + ' is checked');
+                ui.out.debug(id + ' is checked');
                 ui.action.showPanel(id);
             } else if (!$(this).is(':checked')) {
                 id = $(this).attr('value');
-                //ui.out(id + ' is unchecked');
+                ui.out.debug(id + ' is unchecked');
                 ui.action.hidePanel(id);
             }
         });
@@ -1616,14 +1577,23 @@ ui.setup = {
                         } else {
                             checked = '';
                         }
-                        $('#options-form').append(
-                            '<input type="checkbox" name="panel" value="' + id + '" ' + checked + ' />  ' +
-                                id.charAt(0).toUpperCase() + id.slice(1) + '<br />'
-                        );
+                        if (tempPanel.canDisable === true) {  //add to form only if the user can disable it
+                            $('#options-form').append(
+                                '<input type="checkbox" name="panel" value="' + id + '" ' + checked + ' />  ' +
+                                    id.charAt(0).toUpperCase() + id.slice(1) + '<br />'
+                            );
+                        }
                     }
                 }
             }
         }
+    },
+
+    clearPanelOptionsForm: function () {
+        'use strict';
+        ui.out.debug('Clearing Options Form');
+        $('#options-form').empty();
+
     },
 
     logConsole:function () {  //this currently isn't doing anything?

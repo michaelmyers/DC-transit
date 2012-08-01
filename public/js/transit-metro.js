@@ -235,6 +235,9 @@ transit.metro = {
                 );
             }
         }
+
+        ui.determinePanelSize();
+        ui.modifyPanelSizeClick();
     },
 
     cleanBoard: function () {

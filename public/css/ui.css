@@ -136,8 +136,8 @@
     display: none; }
   #ui .panel-container.show {
     display: inline;
-    filter: alpha(opacity=85);
-    opacity: 0.85;
+    filter: alpha(opacity=91);
+    opacity: 0.91;
     -moz-transition: opacity 0.5s linear;
     -o-transition: opacity 0.5s linear;
     -webkit-transition: opacity 0.5s linear;
@@ -152,12 +152,12 @@
     height: 400px;
     overflow-x: hidden;
     overflow-y: auto;
-    background-color: #808080;
+    background-color: #585858;
     white-space: pre-wrap; }
     #ui #log .debug {
-      color: blue; }
+      color: #0101DF; }
     #ui #log .info {
-      color: green; }
+      color: #2EFE2E; }
     #ui #log .warn {
       color: orange; }
     #ui #log .fatal {
