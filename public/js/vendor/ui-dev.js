@@ -832,6 +832,11 @@ var ui = {
             ui.setup.browserInfo();
             ui.localStorage.retrieve();
 
+            if (ui.setup.checkForPanelChange()) {
+                ui.setup.updatePanelModels();
+
+            }
+
             ui.determinePanelSize();
             ui.modifyPanelSizeClick();
 
@@ -847,7 +852,7 @@ var ui = {
             ui.setup.logConsole(); //if disabled
             //ui.setup.watch();
             //Check for touch
-            if ( ui.browser.touchEnable ) {
+            if (ui.browser.touchEnable) {
                 ui.out.info('Touch screen enabled device');
                 ui.setup.touch();
             } else {
@@ -863,7 +868,7 @@ var ui = {
             ui.initialized.ui = true;
             ui.out.info('UI Initialized');
 
-            if( typeof args[1] === 'function') {
+            if (typeof args[1] === 'function') {
                 //console.log('arg was a function');
                 var callback = args[1];
                 callback();
@@ -884,7 +889,7 @@ var ui = {
     log : function (message) { //public function for accessing a debug-panel
         'use strict';
         if (ui.config.debugPanel) {
-            if(!ui.initialized.logConsole) {
+            if (!ui.initialized.logConsole) {
                 ui.out.warn('Log Console not initialized');
                 ui.setup.logConsole();
             }
@@ -900,7 +905,7 @@ var ui = {
         });
         ui.out.debug('Monitoring tabs');
     },
-    monitorForms:function () {
+    monitorForms: function () {
         'use strict';
         $('#options-form input:text, textarea').keypress(function () {
             ui.formUpdate();
@@ -1565,7 +1570,7 @@ ui.setup = {
         //add enablers for the different panels
         if (ui.config.panelDisable) {
             for (var key in ui.ids) {
-                if (ui.ids.hasOwnProperty(key)) {
+                if (ui.ids.hasOwnProperty(key)) {   //this does nothing I think
                     var id = ui.ids[key];
                     if (id !== ui.OPTIONS_ID) { //we don't want to disable the options tab! wouldn't that be funny!
                         //ui.out('Adding ' + id + ' to form');
@@ -1644,6 +1649,41 @@ ui.setup = {
         ui.out.info('Agent: ' + ui.browser.agent);
         ui.out.info('TouchEnable: ' + ui.browser.touchEnable);
 
+    },
+
+    checkForPanelChange : function () {
+        'use strict';
+
+        var testPanel = ui.panels[0];
+        var  newPanel = new ui.Panel('model');
+
+        ui.out.debug('Looking for new Panel model');
+        for (var prop in newPanel) {
+            if (!testPanel.hasOwnProperty(prop)) {
+                ui.out.warn('Didn\'t find panel property ' + prop);
+                return true;
+            }
+        }
+
+        return false;
+    },
+
+    updatePanelModels : function () {
+        'use strict';
+        ui.out.debug('Updating panels');
+        var  newPanel = new ui.Panel('model');
+        for (var key in ui.ids) { //iterate through current panels
+            if (ui.ids.hasOwnProperty(key)) {
+                var id = ui.ids[key];
+                var curPanel = ui.panels[key];
+                for (var prop in newPanel) {   //iterate through the properties of the new panel model
+                    if (!curPanel.hasOwnProperty(prop)) {
+                        ui.out.debug('Adding ' + prop + ' to ' + id);
+                        curPanel[prop] = newPanel[prop];
+                    }
+                }
+            }
+        }
     },
 
     click : function () {
@@ -1735,21 +1775,21 @@ ui.localStorage = {
 
     },
 
-    _updateValueStorage:function () { //should only be called by updateLocalStorage, contains the work
+    _updateValueStorage: function () { //should only be called by updateLocalStorage, contains the work
         'use strict';
         //ui.out.info('Updating valueStorage');
         ui.valueStore[0] = ui.ids;
         ui.valueStore[1] = ui.panels;
         //console.log(ui.valueStore);
     },
-    _unpackValueStorage:function () { //should only be called by updateLocalStorage
+    _unpackValueStorage: function () { //should only be called by updateLocalStorage
         'use strict';
         //ui.out.info('Unpacking valueStorage');
         ui.ids = ui.valueStore[0];
         ui.panels = ui.valueStore[1];
         //console.log(ui.valueStore);
     },
-    update:function () {
+    update: function () {
         'use strict';
         ui.out.info('Updating localStorage');
         ui.localStorage._updateValueStorage();
