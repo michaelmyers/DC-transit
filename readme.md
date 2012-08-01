@@ -1,4 +1,4 @@
-#[dc-transit][http://dc-transit.com]
+#[dc-transit](http://dc-transit.com)
 ### [Atomizer Software](http://atomizersoft.net)
 
 UNDER DEVELOPMENT
