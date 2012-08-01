@@ -824,14 +824,12 @@ var ui = {
             ui.out.info('Config strictControl: ' + arg.development);
             ui.config.strictControl = arg.strictControl;
         }
-
-        $(window).load(function () {  //need to wait until everything is loaded
+        window.onload = function () { //need to wait until everything is loaded
             ui.setup.browserInfo();
             ui.localStorage.retrieve();
 
             ui.determinePanelSize();
             ui.modifyPanelSizeClick();
-
             //Build out your options to disable tabs
             ui.setup.disablePanelOptionsForm();
 
@@ -869,6 +867,48 @@ var ui = {
 
         });
 
+=======
+
+            //Build out your options to disable tabs
+            ui.setup.disablePanelOptionsForm();
+
+            //Start UI monitors
+            ui.monitorForms();
+            ui.monitorTabs();
+            ui.monitorUnload();
+
+            //Setup things
+            ui.setup.logConsole(); //if disabled
+            //ui.setup.watch();
+            //Check for touch
+            if ( ui.browser.touchEnable ) {
+                ui.out.info('Touch screen enabled device');
+                ui.setup.touch();
+            } else {
+                ui.out.debug('No touch screen');
+                ui.setup.click();
+            }
+
+            if (ui.config.strictControl === false) {
+                ui.out.debug('Strict Control not enabled');
+                ui.action.displayPanels();
+            }
+            //Init all done
+            ui.initialized.ui = true;
+            ui.out.info('UI Initialized');
+
+            if( typeof args[1] === 'function') {
+                //console.log('arg was a function');
+                var callback = args[1];
+                callback();
+            } /*else {
+                //console.log('arg was not a function');
+               // console.log(args[1]);
+            }  */
+
+        };
+
+
 
 
         /*else {  //this else statement is just for development to practice on desktop that has no touch
@@ -892,10 +932,12 @@ var ui = {
     },
     monitorTabs:function () {
         'use strict';
+
         $('.open-click').click(function () {  //with this test-click and test-hover go on the entire div
             $(this).parent().toggleClass('open');
             ui.action.toggled($(this).parent().attr('id'));
         });
+        ui.out.debug('Monitoring tabs');
     },
     monitorForms:function () {
         'use strict';
@@ -907,6 +949,8 @@ var ui = {
             //ui.formUpdate();
             ui.action.handleCheckboxChange();
         });
+
+        ui.out.debug('Monitoring forms');
     },
     monitorUnload:function () { //opera does not support onbeforeunload
         'use strict';
@@ -914,6 +958,8 @@ var ui = {
             ui.out.info('onbeforeunload triggered');
             ui.localStorage.update();
         };
+
+        ui.out.debug('Monitoring unload');
     },
 
     updateWatchList: function () {
