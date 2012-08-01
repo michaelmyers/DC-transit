@@ -82,6 +82,9 @@ transit.position = {
                         break;
                     case 3:
                         message = 'GPS Timed Out :-(';  //   3: timed out
+                        break;
+                    default:
+                        message = error;
                 }
                 alert('We could\'t get your location');
                 transit.out.warn('geolocation error code: ' + message);
